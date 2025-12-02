@@ -33,7 +33,7 @@ repositories:
     version: master
   yaml_cpp_catkin:
     type: git
-    url: git@github.com:ethz-asl/yaml_cpp_catkin.git
+    url: git@github.com:suhang99/yaml_cpp_catkin.git
     version: master
   rpg_dvs_ros:
     type: git

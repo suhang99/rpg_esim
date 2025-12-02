@@ -5,7 +5,7 @@ repositories:
     version: master
   ze_oss:
     type: git
-    url: git@github.com:uzh-rpg/ze_oss.git
+    url: git@github.com:suhang99/ze_oss.git
     version: master
   gflags_catkin:
     type: git
@@ -13,7 +13,7 @@ repositories:
     version: master
   glog_catkin:
     type: git
-    url: git@github.com:ethz-asl/glog_catkin.git
+    url: git@github.com:suhang99/glog_catkin.git
     version: master
   eigen_catkin:
     type: git
@@ -42,4 +42,16 @@ repositories:
   assimp_catkin:
     type: git
     url: git@github.com:uzh-rpg/assimp_catkin.git
+    version: master
+  catkin_boost_python_buildtool:
+    type: git
+    url: git@github.com:ethz-asl/catkin_boost_python_buildtool.git
+    version: master
+  numpy_eigen:
+    type: git
+    url: git@github.com:suhang99/numpy_eigen.git
+    version: master
+  pangolin_catkin:
+    type: git
+    url: git@github.com:suhang99/pangolin_catkin.git
     version: master

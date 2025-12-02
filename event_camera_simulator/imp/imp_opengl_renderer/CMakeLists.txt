@@ -40,7 +40,7 @@ target_include_directories(${PROJECT_NAME} PRIVATE ${INCLUDE_DIR})
 target_include_directories(${PROJECT_NAME} PRIVATE ${GLAD_DIR}/include)
 set_property(TARGET ${PROJECT_NAME} PROPERTY CXX_STANDARD 11)
 
-target_link_libraries(${PROJECT_NAME} ${catkin_LIBRARIES} ${OpenCV_LIBRARIES} ${CMAKE_DL_LIBS} glfw glad assimp)
+target_link_libraries(${PROJECT_NAME} ${catkin_LIBRARIES} ${OpenCV_LIBRARIES} ${CMAKE_DL_LIBS} glfw glad)
 
 cs_install()
 cs_export()

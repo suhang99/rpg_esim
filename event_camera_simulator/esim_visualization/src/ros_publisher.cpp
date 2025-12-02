@@ -76,7 +76,7 @@ RosPublisher::RosPublisher(size_t num_cameras)
 
     pointcloud_pub_.emplace_back(
           new ros::Publisher(
-            nh_->advertise<pcl::PointCloud<pcl::PointXYZ>> (getTopicName(i, "pointcloud"), 0)));
+            nh_->advertise<pcl::PointCloud<pcl::PointXYZRGB>> (getTopicName(i, "pointcloud"), 0)));
   }
 
   pose_pub_.reset(new ros::Publisher(nh_->advertise<geometry_msgs::PoseStamped> ("pose", 0)));
@@ -134,7 +134,7 @@ void RosPublisher::pointcloudCallback(const PointCloudVector& pointclouds, Time 
     pcl::PointCloud<pcl::PointXYZRGB>::Ptr msg (new pcl::PointCloud<pcl::PointXYZRGB>);
     std::stringstream ss; ss << "cam" << i;
     pointCloudToMsg(pointclouds[i], ss.str(), t, msg);
-    pointcloud_pub_[i]->publish(msg);
+    pointcloud_pub_[i]->publish(*msg);
   }
 
   last_published_pointcloud_time_ = t;

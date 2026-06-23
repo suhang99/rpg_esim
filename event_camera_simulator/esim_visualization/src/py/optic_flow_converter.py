@@ -66,6 +66,19 @@ class FlowConverterNode:
         self.publishColorCodedFlow(flow_x, flow_y, msg.header.stamp)
         self.publishArrowFlow(flow_x, flow_y, msg.header.stamp)
 
+    @staticmethod
+    def _bgr8_to_imgmsg(cvim):
+        # cv_bridge.cv2_to_imgmsg uses numpy.ndarray.tostring(), removed in
+        # NumPy >= 1.24. Build the sensor_msgs/Image directly with tobytes().
+        img_msg = Image()
+        img_msg.height = cvim.shape[0]
+        img_msg.width = cvim.shape[1]
+        img_msg.encoding = 'bgr8'
+        img_msg.is_bigendian = 0
+        img_msg.step = cvim.shape[1] * 3
+        img_msg.data = np.ascontiguousarray(cvim).tobytes()
+        return img_msg
+
     def publishColorCodedFlow(self, flow_x, flow_y, stamp):
         assert(flow_x.shape == flow_y.shape)
         height, width = flow_x.shape
@@ -79,7 +92,7 @@ class FlowConverterNode:
         hsv[...,2] = cv2.normalize(magnitude,None,0,255,cv2.NORM_MINMAX)
         bgr = cv2.cvtColor(hsv, cv2.COLOR_HSV2BGR)
 
-        img_msg = self._bridge.cv2_to_imgmsg(bgr, 'bgr8')
+        img_msg = self._bgr8_to_imgmsg(bgr)
         img_msg.header.stamp = stamp
         self.pub_color.publish(img_msg)
 
@@ -99,7 +112,7 @@ class FlowConverterNode:
                 cv2.arrowedLine(arrow_field, (ss * x, ss * y),
                                 (int(ss * (x + scale * vx)), int(ss * (y + scale * vy))), color=self.arrows_color, thickness=1)
 
-        img_msg = self._bridge.cv2_to_imgmsg(arrow_field, 'bgr8')
+        img_msg = self._bgr8_to_imgmsg(arrow_field)
         img_msg.header.stamp = stamp
         self.pub_arrows.publish(img_msg)
 

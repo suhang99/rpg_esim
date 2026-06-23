@@ -1,6 +1,10 @@
 <launch>
 
   <arg name="config" />
+  <!-- Set visualize:=false for headless data generation (e.g. on macOS, where
+       the dvs_renderer viewer node aborts on the robostack librospack/libpython
+       issue). esim_node still writes the rosbag regardless. -->
+  <arg name="visualize" default="true" />
 
   <!-- Event camera simulator -->
   <node name="esim_node" pkg="esim_ros" type="esim_node" args="
@@ -9,7 +13,9 @@
     --flagfile=$(find esim_ros)/$(arg config)
     " output="screen"/>
 
-  <include file="$(find esim_ros)/launch/visualization.launch" />
+  <group if="$(arg visualize)">
+    <include file="$(find esim_ros)/launch/visualization.launch" />
+  </group>
 
 
 </launch>

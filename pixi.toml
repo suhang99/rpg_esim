@@ -2,7 +2,7 @@
 authors = ["Su Hang <suhang@shanghaitech.edu.cn>"]
 channels = ["conda-forge", "robostack-noetic"]
 name = "event simulator"
-platforms = ["linux-64"]
+platforms = ["linux-64", "osx-arm64"]
 version = "0.1.0"
 
 [tasks]
@@ -29,6 +29,11 @@ ros-noetic-cv-bridge = "*"
 ros-noetic-eigen-conversions = "*"
 ros-noetic-tf-conversions = "*"
 yaml-cpp = "*"
-libxkbcommon = "*"
 ros-noetic-visualization-msgs = "*"
 ros-noetic-rviz = "*"
+
+# Linux/X11-only: libxkbcommon has no macOS candidate. Keeping it in a
+# linux-64 target table lets the shared environment solve on osx-arm64
+# while leaving the WSL/linux-64 setup unchanged.
+[target.linux-64.dependencies]
+libxkbcommon = "*"

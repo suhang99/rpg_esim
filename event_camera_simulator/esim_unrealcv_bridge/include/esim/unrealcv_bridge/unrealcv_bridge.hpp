@@ -56,7 +56,8 @@ protected:
   Result receive(std::function<Result(std::istream&, uint32_t)>  parser);
 
   //must stand before socket_ because of c++ initialization order
-  boost::asio::io_service io_service_;
+  // io_service was removed in Boost 1.87; io_context is the replacement.
+  boost::asio::io_context io_service_;
   tcp::socket socket_;
   mutable uint32_t counter_;
   uint32_t delay_;

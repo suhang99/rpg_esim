@@ -41,3 +41,18 @@ Build package
 ```bash
 catkin build esim_ros
 ```
+
+## macOS (Apple Silicon)
+
+Same pixi workflow; the `osx-arm64` platform is already in `pixi.toml`. macOS needs
+C++17 (the env's PCL requires it) and the linker must tolerate undefined symbols in
+shared libraries as Linux does:
+```bash
+catkin config --cmake-args -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_STANDARD=17 \
+  -DCMAKE_SHARED_LINKER_FLAGS="-Wl,-undefined,dynamic_lookup" \
+  -DCMAKE_MODULE_LINKER_FLAGS="-Wl,-undefined,dynamic_lookup"
+catkin build esim_ros
+```
+The macOS-specific source fixes live in the `ze_oss` fork (`librt`/SSE/clang guards,
+`PYTHON_LIBRARIES`, C++17). Note `-DCMAKE_CXX_STANDARD=17` is also required on Linux/WSL
+with the current package set.

@@ -33,11 +33,12 @@ UnrealCvClient::UnrealCvClient(std::string host, std::string port)
     delay_(30){
 
   tcp::resolver resolver(io_service_);
-  tcp::resolver::query query(host, port);
-  tcp::resolver::iterator endpoint_iterator = resolver.resolve(query);
+  // resolver::query and resolver::iterator were removed in Boost 1.87;
+  // resolve(host, port) returns a results range usable directly by connect().
+  auto endpoints = resolver.resolve(host, port);
 
   boost::system::error_code ec;
-  boost::asio::connect(socket_, endpoint_iterator, unrealcv_server_connect_condition(), ec);
+  boost::asio::connect(socket_, endpoints, unrealcv_server_connect_condition(), ec);
   if(ec)
   {
     LOG(FATAL) << "Could not connect to UnrealCV server";

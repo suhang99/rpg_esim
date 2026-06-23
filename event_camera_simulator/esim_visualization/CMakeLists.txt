@@ -3,7 +3,8 @@ project(esim_visualization)
 
 find_package(catkin_simple REQUIRED)
 catkin_simple()
-set(CMAKE_CXX_STANDARD 14)
+# PCL 1.15 (pulled in via pcl_ros) requires C++17 or above.
+set(CMAKE_CXX_STANDARD 17)
 
 
 # This macro ensures modules and global scripts declared therein get installed
